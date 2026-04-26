@@ -120,11 +120,10 @@ function Planet({
         }}
       >
         <sphereGeometry args={[data.size, 32, 32]} />
-        {/* @ts-expect-error spring animated value */}
         <animated.meshStandardMaterial
           color={data.color}
           emissive={data.color}
-          emissiveIntensity={emissive}
+          emissiveIntensity={emissive as unknown as number}
           roughness={0.5}
           metalness={0.2}
         />
