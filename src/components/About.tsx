@@ -1,14 +1,14 @@
 import { useFadeUp } from "@/hooks/use-fade-up";
 
 const STATS = [
-  { num: "4+", label: "Live Projects Shipped" },
-  { num: "3+", label: "Hackathon Wins" },
-  { num: "2nd", label: "Year at GCE" },
-  { num: "8+", label: "Technologies" },
+  { num: "6+", label: "Projects Shipped" },
+  { num: "3+", label: "Hackathons Won" },
+  { num: "2nd", label: "Year, B.E. Comp Eng" },
+  { num: "10+", label: "Tech Stack" },
 ];
 
-const ROW1 = ["Python", "ML/AI", "React", "FastAPI", "C/C++", "YOLOv8", "Hackathons", "LLMs/RAG"];
-const ROW2 = ["Docker", "Firebase", "SHAP/XAI", "CrewAI", "n8n", "Gemini API", "Vercel", "Java"];
+const ROW1 = ["Python", "Machine Learning", "React", "FastAPI", "TypeScript", "YOLOv8", "TensorFlow", "LLMs & RAG"];
+const ROW2 = ["Docker", "Firebase", "Supabase", "CrewAI", "n8n", "Gemini API", "Vercel", "Next.js"];
 
 function Ticker({ items, reverse }: { items: string[]; reverse?: boolean }) {
   const dup = [...items, ...items, ...items];
@@ -27,7 +27,7 @@ function Ticker({ items, reverse }: { items: string[]; reverse?: boolean }) {
 
 export function About() {
   return (
-    <section className="relative min-h-screen w-full overflow-hidden">
+    <section id="about" className="relative min-h-screen w-full overflow-hidden">
       <video
         className="absolute inset-0 w-full h-full object-cover"
         src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_151551_992053d1-3d3e-4b8c-abac-45f22158f411.mp4"
@@ -41,11 +41,9 @@ export function About() {
               className="font-anton uppercase leading-[1] text-cream"
               style={{ fontSize: "clamp(36px, 5vw, 72px)" }}
             >
-              Hello!
+              About
               <br />
-              I'm
-              <br />
-              Vauldan
+              Me
             </h2>
             <span
               className="font-condiment text-neon absolute"
@@ -83,13 +81,11 @@ export function About() {
             className="font-mono text-[14px] uppercase tracking-[0.12em] text-cream/75 max-w-[420px]"
             style={{ lineHeight: 2 }}
           >
-            A Computer Engineering student at Goa College of Engineering building AI systems
-            that solve real problems.
+            I'm Vauldan D'Souza — a Computer Engineering undergraduate at Goa College of Engineering with a passion for building AI-powered solutions that tackle real-world challenges.
             <br /><br />
-            From real-time fraud detection to railway surveillance with multi-agent
-            orchestration — every project is a new mission.
+            My work spans full-stack ML systems — from real-time UPI fraud detection and railway surveillance with multi-agent orchestration, to research on RAG robustness and automated content pipelines.
             <br /><br />
-            Dattebayo.
+            I believe in shipping fast, learning constantly, and pushing boundaries with every project I take on.
           </p>
           <div className="mt-12 space-y-2">
             <Ticker items={ROW1} />

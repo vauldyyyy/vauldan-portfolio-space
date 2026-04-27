@@ -1,4 +1,4 @@
-import { Mail, Github, Linkedin } from "lucide-react";
+import { Mail, Github, Linkedin, FileDown } from "lucide-react";
 
 export function Hero() {
   return (
@@ -24,7 +24,7 @@ export function Hero() {
             <div className="inline-flex items-center gap-2 mb-6">
               <span className="w-2 h-2 rounded-full bg-neon pulse-dot" />
               <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-cream/80">
-                Available for opportunities
+                Open to work & collaborations
               </span>
             </div>
             <div className="relative">
@@ -32,52 +32,49 @@ export function Hero() {
                 className="font-anton uppercase text-cream leading-[0.95]"
                 style={{ fontSize: "clamp(42px, 8vw, 105px)" }}
               >
-                Beyond code
+                I build
                 <br />
-                and
+                things that
                 <br />
-                <span className="text-neon">(its)</span> limits
+                <span className="text-neon">(think)</span>
               </h1>
-              <span
-                className="font-condiment text-neon absolute"
-                style={{
-                  fontSize: "clamp(22px, 3vw, 48px)",
-                  transform: "rotate(-2deg)",
-                  top: "-18px",
-                  right: "8%",
-                  opacity: 0.9,
-                }}
-              >
-                ML engineer
-              </span>
             </div>
             <p
               className="font-mono text-[13px] uppercase tracking-[0.18em] text-cream/65 mt-8"
-              style={{ maxWidth: "280px", lineHeight: 1.8 }}
+              style={{ maxWidth: "320px", lineHeight: 1.8 }}
             >
-              Computer Engineering Student / Goa College of Engineering / 2024–2028
+              Vauldan D'Souza — Computer Engineering / Goa College of Engineering / Class of 2028
             </p>
             <div className="flex flex-wrap items-center gap-4 mt-8">
               <a
-                href="#missions"
+                href="#projects"
                 className="font-anton text-[13px] uppercase tracking-[0.15em] rounded-full px-8 py-3.5 bg-neon hover:bg-neon/90 transition"
                 style={{ color: "#010828" }}
               >
-                See Missions
+                View Projects
               </a>
               <a
-                href="#summon"
+                href="#contact"
                 className="font-anton text-[13px] uppercase tracking-[0.15em] rounded-full px-8 py-3.5 border border-cream/60 text-cream hover:border-neon hover:text-neon transition"
               >
-                Summon Me
+                Get in Touch
+              </a>
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noreferrer"
+                className="font-anton text-[13px] uppercase tracking-[0.15em] rounded-full px-6 py-3.5 border border-cream/30 text-cream/70 hover:border-neon hover:text-neon transition flex items-center gap-2"
+              >
+                <FileDown size={14} />
+                Resume
               </a>
             </div>
           </div>
           <div className="flex flex-row lg:flex-col gap-3">
             {[
-              { Icon: Mail, href: "mailto:hello@vauldan.dev", label: "Email" },
-              { Icon: Github, href: "https://github.com", label: "GitHub" },
-              { Icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
+              { Icon: Mail, href: "mailto:waldendsouza@gmail.com", label: "Email" },
+              { Icon: Github, href: "https://github.com/vauldyyyy", label: "GitHub" },
+              { Icon: Linkedin, href: "https://linkedin.com/in/walden-dsouza", label: "LinkedIn" },
             ].map(({ Icon, href, label }) => (
               <a
                 key={label}

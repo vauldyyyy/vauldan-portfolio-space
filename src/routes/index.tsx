@@ -1,39 +1,46 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
-import { SolarSystem } from "@/components/SolarSystem";
+import { ProjectUniverse } from "@/components/SolarSystem";
+import { Skills } from "@/components/Skills";
 import { About } from "@/components/About";
 import { Missions } from "@/components/Missions";
 import { Memories } from "@/components/Memories";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
-import { Marquee } from "@/components/Marquee";
+import { SectionDivider } from "@/components/SectionDivider";
+import { GlobalBackground } from "@/components/GlobalBackground";
+import { ProjectCards } from "@/components/ProjectCards";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/")(({
   head: () => ({
     meta: [
-      { title: "Vauldan — ML Engineer Portfolio" },
-      { name: "description", content: "Vauldan: ML engineer, computer engineering student at GCE. Real-time AI systems, hackathons, and missions beyond code." },
-      { property: "og:title", content: "Vauldan — Beyond code and its limits" },
-      { property: "og:description", content: "ML engineer building real-time AI systems. Explore the solar system of skills, missions, and memories." },
+      { title: "Vauldan D'Souza — Full-Stack ML Engineer Portfolio" },
+      { name: "description", content: "Vauldan D'Souza: Full-stack ML engineer and computer engineering student at GCE Goa. Building intelligent AI systems, shipping production-grade projects, and winning hackathons." },
+      { property: "og:title", content: "Vauldan D'Souza — I Build Things That Think" },
+      { property: "og:description", content: "Full-stack ML engineer portfolio. Explore projects like FraudLens, RailGuard AI, MedTrack, and more." },
     ],
   }),
   component: Index,
-});
+}));
 
 function Index() {
   return (
-    <div className="relative bg-background text-cream min-h-screen">
+    <div className="relative text-cream min-h-screen bg-transparent">
+      <GlobalBackground />
       <div className="noise-overlay" />
       <Navbar />
       <Hero />
-      <Marquee text="Vauldan ✦ ML Engineer ✦ Computer Engineering ✦ GCE ✦ Hackathon Winner ✦ AI Builder ✦" />
-      <SolarSystem />
-      <Marquee text="We find the path by walking it, not by waiting for it to be shown ✦" reverse />
+      <SectionDivider number="01" label="Project Universe" />
+      <ProjectUniverse />
+      <ProjectCards />
+      <SectionDivider number="02" label="Skills & Domains" />
+      <Skills />
+      <SectionDivider number="03" label="About" />
       <About />
-      <Marquee text="Missions ✦ FraudLens ✦ RailGuard AI ✦ MedTrack ✦ RAG Research ✦ Cyber Dome 2026 ✦" />
+      <SectionDivider number="04" label="Featured Work" />
       <Missions />
-      <Marquee text="Untold stories are some of the best stories ✦" reverse />
+      <SectionDivider number="05" label="Journey" />
       <Memories />
       <Contact />
       <Footer />

@@ -4,26 +4,67 @@ import { Stars, Html, OrbitControls } from "@react-three/drei";
 import { useSpring, animated } from "@react-spring/three";
 import * as THREE from "three";
 
-interface PlanetData {
+/* ─── Project data ─── */
+interface ProjectData {
   name: string;
   color: string;
   size: number;
   orbitRadius: number;
   speed: number;
   tilt: number;
-  hasRing?: boolean;
-  moons?: number;
+  desc: string;
+  tags: string[];
+  shape: "shield" | "train" | "capsule" | "document";
 }
 
-const PLANETS: PlanetData[] = [
-  { name: "Python & ML", color: "#3776AB", size: 0.45, orbitRadius: 3.5, speed: 0.8, tilt: 0.18, moons: 2 },
-  { name: "React & FastAPI", color: "#61DAFB", size: 0.5, orbitRadius: 5.2, speed: 0.5, tilt: -0.1 },
-  { name: "Computer Vision", color: "#FF6B35", size: 0.42, orbitRadius: 7.0, speed: 0.35, tilt: 0.22, hasRing: true },
-  { name: "LLMs & RAG", color: "#9B59B6", size: 0.48, orbitRadius: 8.8, speed: 0.25, tilt: -0.15 },
-  { name: "C / C++", color: "#00599C", size: 0.38, orbitRadius: 10.5, speed: 0.18, tilt: 0.08 },
-  { name: "Automation & n8n", color: "#F39C12", size: 0.55, orbitRadius: 12.0, speed: 0.12, tilt: -0.2 },
+const PROJECTS: ProjectData[] = [
+  {
+    name: "FraudLens",
+    color: "#3776AB",
+    size: 0.5,
+    orbitRadius: 4.0,
+    speed: 0.6,
+    tilt: 0.15,
+    desc: "Real-time UPI fraud detection with 5-model stacking ensemble and SHAP explainability.",
+    tags: ["Python", "FastAPI", "React", "SHAP"],
+    shape: "shield",
+  },
+  {
+    name: "RailGuard AI",
+    color: "#FF6B35",
+    size: 0.55,
+    orbitRadius: 6.5,
+    speed: 0.4,
+    tilt: -0.12,
+    desc: "Railway surveillance — YOLOv8, ByteTrack, LSTM crowd forecasting & CrewAI orchestration.",
+    tags: ["YOLOv8", "LSTM", "CrewAI", "FastAPI"],
+    shape: "train",
+  },
+  {
+    name: "MedTrack",
+    color: "#2ECC71",
+    size: 0.45,
+    orbitRadius: 8.8,
+    speed: 0.28,
+    tilt: 0.2,
+    desc: "Smart medicine management with AI prescription scanning, dose reminders & Supabase sync.",
+    tags: ["Flutter", "Gemini API", "Supabase"],
+    shape: "capsule",
+  },
+  {
+    name: "RAG Research",
+    color: "#9B59B6",
+    size: 0.48,
+    orbitRadius: 11.0,
+    speed: 0.18,
+    tilt: -0.18,
+    desc: "Research study on RAG failure modes across Gemini API, chunking strategies & query corruption.",
+    tags: ["RAG", "Gemini API", "LangChain", "Python"],
+    shape: "document",
+  },
 ];
 
+/* ─── Central Sun (represents Vauldan) ─── */
 function Sun() {
   const ref = useRef<THREE.Mesh>(null);
   useFrame((_, dt) => {
@@ -41,52 +82,142 @@ function Sun() {
         />
       </mesh>
       <pointLight position={[0, 0, 0]} intensity={3} distance={40} color="#bfff80" />
+      {/* "W" label on hover area */}
+      <Html position={[0, 2, 0]} center distanceFactor={10} style={{ pointerEvents: "none" }}>
+        <div className="font-anton uppercase text-[11px] tracking-[0.2em] text-neon/50 whitespace-nowrap">
+          Vauldan D'Souza
+        </div>
+      </Html>
     </group>
   );
 }
 
+/* ─── Orbit rings ─── */
 function OrbitRing({ radius, tilt }: { radius: number; tilt: number }) {
   return (
     <mesh rotation={[Math.PI / 2 + tilt, 0, 0]}>
       <torusGeometry args={[radius, 0.008, 8, 128]} />
-      <meshBasicMaterial color="#EFF4FF" transparent opacity={0.15} />
+      <meshBasicMaterial color="#EFF4FF" transparent opacity={0.12} />
     </mesh>
   );
 }
 
-function Moon({ parentSize, index }: { parentSize: number; index: number }) {
-  const ref = useRef<THREE.Mesh>(null);
-  const offset = index * Math.PI;
-  useFrame(({ clock }) => {
-    if (!ref.current) return;
-    const t = clock.getElapsedTime() * (1.5 + index * 0.5) + offset;
-    const r = parentSize + 0.35 + index * 0.15;
-    ref.current.position.x = Math.cos(t) * r;
-    ref.current.position.z = Math.sin(t) * r;
-  });
+/* ─── Shield shape (FraudLens) ─── */
+function ShieldShape({ color, size }: { color: string; size: number }) {
   return (
-    <mesh ref={ref}>
-      <sphereGeometry args={[0.06, 12, 12]} />
-      <meshStandardMaterial color="#EFF4FF" emissive="#EFF4FF" emissiveIntensity={0.3} />
-    </mesh>
+    <group>
+      {/* Main body — rounded box */}
+      <mesh>
+        <boxGeometry args={[size * 1.2, size * 1.5, size * 0.3]} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.4} roughness={0.4} metalness={0.3} />
+      </mesh>
+      {/* Top accent */}
+      <mesh position={[0, size * 0.85, 0]}>
+        <sphereGeometry args={[size * 0.25, 16, 16]} />
+        <meshStandardMaterial color="#6FFF00" emissive="#6FFF00" emissiveIntensity={0.6} />
+      </mesh>
+      {/* Scanning beam ring */}
+      <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0, size * 0.2]}>
+        <torusGeometry args={[size * 0.8, 0.02, 8, 32]} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.8} transparent opacity={0.6} />
+      </mesh>
+    </group>
   );
 }
 
-function Planet({
+/* ─── Train shape (RailGuard) ─── */
+function TrainShape({ color, size }: { color: string; size: number }) {
+  return (
+    <group>
+      {/* Body */}
+      <mesh>
+        <boxGeometry args={[size * 1.8, size * 0.9, size * 0.8]} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.4} roughness={0.3} metalness={0.4} />
+      </mesh>
+      {/* Cabin top */}
+      <mesh position={[size * 0.3, size * 0.65, 0]}>
+        <boxGeometry args={[size * 0.9, size * 0.5, size * 0.7]} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.3} />
+      </mesh>
+      {/* Chimney */}
+      <mesh position={[-size * 0.5, size * 0.7, 0]}>
+        <cylinderGeometry args={[size * 0.12, size * 0.15, size * 0.5, 12]} />
+        <meshStandardMaterial color="#333" emissive={color} emissiveIntensity={0.2} />
+      </mesh>
+      {/* Wheels */}
+      {[-0.5, 0, 0.5].map((x, i) => (
+        <mesh key={i} position={[x * size, -size * 0.55, size * 0.45]} rotation={[Math.PI / 2, 0, 0]}>
+          <cylinderGeometry args={[size * 0.18, size * 0.18, size * 0.08, 16]} />
+          <meshStandardMaterial color="#222" metalness={0.8} roughness={0.2} />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
+/* ─── Capsule/Pill shape (MedTrack) ─── */
+function CapsuleShape({ color, size }: { color: string; size: number }) {
+  return (
+    <group rotation={[0, 0, Math.PI / 6]}>
+      <mesh>
+        <capsuleGeometry args={[size * 0.35, size * 0.8, 12, 24]} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.4} roughness={0.3} />
+      </mesh>
+      {/* Divider line */}
+      <mesh position={[0, 0, 0]}>
+        <torusGeometry args={[size * 0.36, 0.015, 8, 32]} />
+        <meshStandardMaterial color="#fff" emissive="#fff" emissiveIntensity={0.3} transparent opacity={0.6} />
+      </mesh>
+    </group>
+  );
+}
+
+/* ─── Document shape (RAG Research) ─── */
+function DocumentShape({ color, size }: { color: string; size: number }) {
+  return (
+    <group>
+      {/* Page */}
+      <mesh>
+        <boxGeometry args={[size * 1.0, size * 1.4, size * 0.08]} />
+        <meshStandardMaterial color="#EFF4FF" emissive="#EFF4FF" emissiveIntensity={0.15} roughness={0.6} />
+      </mesh>
+      {/* Text lines */}
+      {[-0.3, -0.05, 0.2].map((y, i) => (
+        <mesh key={i} position={[0, y * size, size * 0.05]}>
+          <boxGeometry args={[size * 0.65, size * 0.06, size * 0.02]} />
+          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.4} />
+        </mesh>
+      ))}
+      {/* Magnifying glass */}
+      <group position={[size * 0.45, -size * 0.5, size * 0.15]}>
+        <mesh>
+          <torusGeometry args={[size * 0.2, 0.025, 8, 24]} />
+          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.5} />
+        </mesh>
+        <mesh position={[size * 0.15, -size * 0.15, 0]} rotation={[0, 0, -Math.PI / 4]}>
+          <cylinderGeometry args={[0.025, 0.025, size * 0.25, 8]} />
+          <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.3} />
+        </mesh>
+      </group>
+    </group>
+  );
+}
+
+/* ─── Project object with orbit + bounce ─── */
+function ProjectObject({
   data,
   onSelect,
 }: {
-  data: PlanetData;
+  data: ProjectData;
   onSelect: (name: string) => void;
 }) {
   const groupRef = useRef<THREE.Group>(null);
-  const meshRef = useRef<THREE.Mesh>(null);
+  const innerRef = useRef<THREE.Group>(null);
   const [hovered, setHovered] = useState(false);
   const startAngle = useMemo(() => Math.random() * Math.PI * 2, []);
 
-  const { scale, emissive } = useSpring({
-    scale: hovered ? 1.4 : 1,
-    emissive: hovered ? 1.2 : 0.4,
+  const { scale } = useSpring({
+    scale: hovered ? 1.35 : 1,
     config: { tension: 200, friction: 18 },
   });
 
@@ -97,13 +228,24 @@ function Planet({
       groupRef.current.position.z = Math.sin(t) * data.orbitRadius;
       groupRef.current.position.y = Math.sin(t) * data.orbitRadius * Math.sin(data.tilt);
     }
-    if (meshRef.current) meshRef.current.rotation.y += 0.01;
+    // Bounce + spin
+    if (innerRef.current) {
+      innerRef.current.rotation.y += 0.008;
+      innerRef.current.position.y = Math.sin(clock.getElapsedTime() * 2 + startAngle) * 0.15;
+    }
   });
+
+  const ShapeComponent = {
+    shield: ShieldShape,
+    train: TrainShape,
+    capsule: CapsuleShape,
+    document: DocumentShape,
+  }[data.shape];
 
   return (
     <group ref={groupRef}>
-      <animated.mesh
-        ref={meshRef}
+      <animated.group
+        ref={innerRef}
         scale={scale as unknown as number}
         onPointerOver={(e) => {
           e.stopPropagation();
@@ -119,29 +261,11 @@ function Planet({
           onSelect(data.name);
         }}
       >
-        <sphereGeometry args={[data.size, 32, 32]} />
-        <animated.meshStandardMaterial
-          color={data.color}
-          emissive={data.color}
-          emissiveIntensity={emissive as unknown as number}
-          roughness={0.5}
-          metalness={0.2}
-        />
-      </animated.mesh>
-
-      {data.hasRing && (
-        <mesh rotation={[Math.PI / 2.4, 0, 0]}>
-          <torusGeometry args={[data.size * 1.6, 0.04, 8, 64]} />
-          <meshStandardMaterial color={data.color} emissive={data.color} emissiveIntensity={0.4} transparent opacity={0.7} />
-        </mesh>
-      )}
-
-      {data.moons && Array.from({ length: data.moons }).map((_, i) => (
-        <Moon key={i} parentSize={data.size} index={i} />
-      ))}
+        <ShapeComponent color={data.color} size={data.size} />
+      </animated.group>
 
       {hovered && (
-        <Html position={[0, data.size + 0.6, 0]} center distanceFactor={10} style={{ pointerEvents: "none" }}>
+        <Html position={[0, data.size + 0.8, 0]} center distanceFactor={10} style={{ pointerEvents: "none" }}>
           <div className="font-anton uppercase text-[13px] tracking-[0.15em] text-neon whitespace-nowrap px-3 py-1.5 rounded-md liquid-glass">
             {data.name}
           </div>
@@ -151,6 +275,7 @@ function Planet({
   );
 }
 
+/* ─── Floating Astronaut ─── */
 function Astronaut() {
   const ref = useRef<THREE.Group>(null);
   useFrame(({ clock }) => {
@@ -160,7 +285,6 @@ function Astronaut() {
     ref.current.rotation.y = (t * Math.PI * 2) / 20;
   });
 
-  // Tether curve
   const tetherGeom = useMemo(() => {
     const curve = new THREE.CatmullRomCurve3([
       new THREE.Vector3(0, -0.6, 0),
@@ -173,28 +297,18 @@ function Astronaut() {
 
   return (
     <group ref={ref} position={[-6, 0, 2]}>
-      {/* Body */}
       <mesh>
         <capsuleGeometry args={[0.35, 0.7, 8, 16]} />
         <meshStandardMaterial color="#EFF4FF" roughness={0.4} metalness={0.3} />
       </mesh>
-      {/* Helmet */}
       <mesh position={[0, 0.75, 0]}>
         <sphereGeometry args={[0.32, 24, 24]} />
-        <meshStandardMaterial
-          color="#ffffff"
-          transparent
-          opacity={0.3}
-          roughness={0}
-          metalness={0.9}
-        />
+        <meshStandardMaterial color="#ffffff" transparent opacity={0.3} roughness={0} metalness={0.9} />
       </mesh>
-      {/* Visor */}
       <mesh position={[0, 0.75, 0.05]}>
         <sphereGeometry args={[0.25, 24, 24]} />
         <meshStandardMaterial color="#0a2010" emissive="#6FFF00" emissiveIntensity={0.15} metalness={1} roughness={0.2} />
       </mesh>
-      {/* Arms */}
       <mesh position={[-0.45, 0.1, 0]} rotation={[0, 0, 0.4]}>
         <cylinderGeometry args={[0.1, 0.1, 0.6, 12]} />
         <meshStandardMaterial color="#EFF4FF" />
@@ -203,7 +317,6 @@ function Astronaut() {
         <cylinderGeometry args={[0.1, 0.1, 0.6, 12]} />
         <meshStandardMaterial color="#EFF4FF" />
       </mesh>
-      {/* Legs */}
       <mesh position={[-0.18, -0.75, 0]}>
         <cylinderGeometry args={[0.11, 0.11, 0.6, 12]} />
         <meshStandardMaterial color="#EFF4FF" />
@@ -212,7 +325,6 @@ function Astronaut() {
         <cylinderGeometry args={[0.11, 0.11, 0.6, 12]} />
         <meshStandardMaterial color="#EFF4FF" />
       </mesh>
-      {/* Tether */}
       <mesh geometry={tetherGeom}>
         <meshStandardMaterial color="#EFF4FF" emissive="#6FFF00" emissiveIntensity={0.1} />
       </mesh>
@@ -220,30 +332,23 @@ function Astronaut() {
   );
 }
 
-const PROJECTS_BY_PLANET: Record<string, string[]> = {
-  "Python & ML": ["FraudLens — UPI Fraud Detection", "RAG Robustness Study"],
-  "React & FastAPI": ["FraudLens Dashboard", "RailGuard AI Frontend"],
-  "Computer Vision": ["RailGuard AI — YOLOv8 + ByteTrack"],
-  "LLMs & RAG": ["When Retrieval Fails", "CrewAI Multi-Agent"],
-  "C / C++": ["Systems coursework — GCE"],
-  "Automation & n8n": ["YouTube Shorts Pipeline"],
-};
-
-export function SolarSystem() {
+/* ─── Main Section ─── */
+export function ProjectUniverse() {
   const [selected, setSelected] = useState<string | null>(null);
+  const selectedProject = PROJECTS.find((p) => p.name === selected);
 
   return (
-    <section id="solar-system" className="relative w-full h-screen overflow-hidden" style={{ background: "#010828" }}>
+    <section id="projects" className="relative w-full h-screen overflow-hidden bg-transparent">
       <Canvas camera={{ position: [0, 6, 18], fov: 55 }} dpr={[1, 2]}>
         <Suspense fallback={null}>
           <ambientLight intensity={0.15} />
           <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
           <Sun />
-          {PLANETS.map((p) => (
+          {PROJECTS.map((p) => (
             <OrbitRing key={`r-${p.name}`} radius={p.orbitRadius} tilt={p.tilt} />
           ))}
-          {PLANETS.map((p) => (
-            <Planet key={p.name} data={p} onSelect={setSelected} />
+          {PROJECTS.map((p) => (
+            <ProjectObject key={p.name} data={p} onSelect={setSelected} />
           ))}
           <Astronaut />
           <OrbitControls
@@ -262,31 +367,31 @@ export function SolarSystem() {
         <div className="absolute top-10 left-10">
           <div
             className="font-anton uppercase leading-[0.9] text-cream"
-            style={{ fontSize: "56px", opacity: 0.06 }}
+            style={{ fontSize: "clamp(40px, 8vw, 56px)", opacity: 0.06 }}
           >
-            SOLAR
+            PROJECT
             <br />
-            SYSTEM
+            UNIVERSE
           </div>
         </div>
         <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-center">
           <div className="font-condiment text-neon" style={{ fontSize: "20px", opacity: 0.7 }}>
-            explore my universe
+            explore my work
           </div>
           <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-cream/40 mt-2">
-            hover planets • click to explore
+            hover objects • click to see details
           </div>
         </div>
       </div>
 
-      {/* Project card slide-up */}
-      {selected && (
+      {/* Project detail card */}
+      {selected && selectedProject && (
         <div className="absolute left-1/2 -translate-x-1/2 bottom-6 w-[min(92vw,720px)] z-20">
           <div className="liquid-glass rounded-[24px] p-6 animate-in">
             <div className="flex items-start justify-between gap-4 mb-3">
               <div>
                 <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-neon mb-1">
-                  Domain
+                  Project
                 </div>
                 <div className="font-anton text-[22px] uppercase text-cream">{selected}</div>
               </div>
@@ -297,16 +402,19 @@ export function SolarSystem() {
                 Close ✕
               </button>
             </div>
-            <ul className="space-y-2">
-              {(PROJECTS_BY_PLANET[selected] ?? ["Coming soon"]).map((p) => (
-                <li
-                  key={p}
-                  className="font-mono text-[12px] uppercase tracking-wider text-cream/80 border-l-2 border-neon pl-3"
+            <p className="font-mono text-[11px] uppercase tracking-wider text-cream/70 leading-[1.7] mb-3">
+              {selectedProject.desc}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {selectedProject.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="font-mono text-[9px] uppercase tracking-[0.15em] text-cream/70 border border-cream/15 rounded-full px-2.5 py-1"
                 >
-                  {p}
-                </li>
+                  {tag}
+                </span>
               ))}
-            </ul>
+            </div>
           </div>
         </div>
       )}

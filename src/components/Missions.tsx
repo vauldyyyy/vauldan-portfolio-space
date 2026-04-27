@@ -8,6 +8,7 @@ interface Project {
   desc: string;
   tags: string[];
   wide?: boolean;
+  link?: string;
 }
 
 const PROJECTS: Project[] = [
@@ -15,30 +16,34 @@ const PROJECTS: Project[] = [
     video: "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_053923_22c0a6a5-313c-474c-85ff-3b50d25e944a.mp4",
     score: "9.2/10",
     title: "FraudLens",
-    desc: "Real-time UPI fraud detection with 5-model stacking ensemble, SHAP explainability, and live React dashboard deployed on Vercel.",
+    desc: "Real-time UPI fraud detection engine powered by a 5-model stacking ensemble with SHAP explainability and a live React analytics dashboard.",
     tags: ["Python", "FastAPI", "React", "SHAP", "Vercel", "ML Ensemble"],
+    link: "https://github.com/vauldyyyy",
   },
   {
     video: "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_054411_511c1b7a-fb2f-42ef-bf6c-32c0b1a06e79.mp4",
     score: "9.5/10",
     title: "RailGuard AI",
-    desc: "Railway surveillance using YOLOv8, OSNet ReID, ByteTrack tracking, LSTM crowd forecasting & CrewAI multi-agent orchestration. Cyber Dome 2026.",
-    tags: ["YOLOv8", "DeepSORT", "LSTM", "CrewAI", "FastAPI", "React/Vite"],
+    desc: "End-to-end railway surveillance platform — YOLOv8 object detection, OSNet ReID, ByteTrack tracking, LSTM crowd forecasting & CrewAI multi-agent orchestration. Built at Cyber Dome 2026.",
+    tags: ["YOLOv8", "ByteTrack", "LSTM", "CrewAI", "FastAPI", "React"],
+    link: "https://github.com/vauldyyyy",
   },
   {
     video: "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_055427_ac7035b5-9f3b-4289-86fc-941b2432317d.mp4",
     score: "8.7/10",
     title: "MedTrack",
-    desc: "Smart medicine expiry tracker with OCR via Tesseract.js, Firebase real-time sync, MySQL, and email automation via EmailJS.",
-    tags: ["Flask", "Firebase", "MySQL", "Tesseract.js", "EmailJS"],
+    desc: "Smart medicine management app with AI-powered prescription scanning via Gemini, dose reminders, expiry tracking, and cross-device sync via Supabase.",
+    tags: ["Flutter", "Supabase", "Gemini API", "Dart", "Push Notifications"],
+    link: "https://github.com/vauldyyyy",
   },
   {
     video: "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_053923_22c0a6a5-313c-474c-85ff-3b50d25e944a.mp4",
     score: "8.9/10",
     title: "When Retrieval Fails",
-    desc: "Research-grade RAG robustness study probing failure modes across Gemini API, chunking strategies, and query corruption scenarios.",
-    tags: ["RAG", "Gemini API", "LangChain", "Python", "Research"],
+    desc: "Research study probing failure modes of Retrieval-Augmented Generation across Gemini API, chunking strategies, query corruption, and context window overflow.",
+    tags: ["RAG", "Gemini API", "LangChain", "Python", "Research Paper"],
     wide: true,
+    link: "https://github.com/vauldyyyy",
   },
 ];
 
@@ -79,12 +84,15 @@ function Card({ p }: { p: Project }) {
       <div className="liquid-glass rounded-[20px] px-5 py-4 mt-5 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-cream/70">
-            Impact Score:
+            Impact:
           </span>
           <span className="font-anton text-[16px] text-neon">{p.score}</span>
         </div>
-        <button
-          aria-label="Open project"
+        <a
+          href={p.link || "#"}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`View ${p.title} project`}
           className="w-12 h-12 rounded-full flex items-center justify-center text-cream shadow-lg transition hover:scale-110"
           style={{
             background: "linear-gradient(135deg, #b724ff, #7c3aed)",
@@ -92,7 +100,7 @@ function Card({ p }: { p: Project }) {
           }}
         >
           <ArrowRight size={18} />
-        </button>
+        </a>
       </div>
     </div>
   );
@@ -100,19 +108,19 @@ function Card({ p }: { p: Project }) {
 
 export function Missions() {
   return (
-    <section id="missions" className="relative w-full py-28" style={{ background: "#010828" }}>
+    <section id="missions" className="relative w-full py-28 bg-transparent">
       <div className="mx-auto max-w-[1400px] px-6 md:px-12">
         <div className="flex items-end justify-between flex-wrap gap-6 mb-16">
           <h2
             className="font-anton uppercase text-cream leading-[0.95]"
             style={{ fontSize: "clamp(36px, 5vw, 72px)" }}
           >
-            Collection of
+            Featured
             <br />
-            <span className="pl-12 inline-block"><span className="font-condiment text-neon" style={{ fontSize: "1.05em" }}>Code</span> Missions</span>
+            <span className="pl-12 inline-block"><span className="font-condiment text-neon" style={{ fontSize: "1.05em" }}>Work</span> & Projects</span>
           </h2>
-          <a href="#" className="font-anton text-cream uppercase tracking-[0.15em] relative" style={{ fontSize: "clamp(20px, 2vw, 28px)" }}>
-            See All
+          <a href="https://github.com/vauldyyyy" target="_blank" rel="noreferrer" className="font-anton text-cream uppercase tracking-[0.15em] relative" style={{ fontSize: "clamp(20px, 2vw, 28px)" }}>
+            All Projects
             <span className="absolute left-0 -bottom-1 h-[3px] w-full bg-neon" />
           </a>
         </div>
