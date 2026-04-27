@@ -1,0 +1,9 @@
+{
+  "name": "vauldan-portfolio-space",
+  "main": "dist/server/index.js",
+  "assets": {
+    "directory": "dist/client"
+  },
+  "compatibility_date": "2024-04-27",
+  "compatibility_flags": ["nodejs_compat"]
+}
