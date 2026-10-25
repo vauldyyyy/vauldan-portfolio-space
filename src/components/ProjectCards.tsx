@@ -1,4 +1,4 @@
-import { Github, Linkedin } from "lucide-react";
+import { ExternalLink, Github, Linkedin } from "lucide-react";
 
 interface ProjectDetails {
   title: string;
@@ -6,13 +6,15 @@ interface ProjectDetails {
   tags: string[];
   image: string;
   github?: string;
+  demo?: string;
   linkedin?: string;
 }
 
 const PROJECTS: ProjectDetails[] = [
   {
     title: "Sup-Chain",
-    description: "Sup-Chain is a blockchain-powered supply chain management solution that replaces traditional centralized systems like Oracle with a decentralized, tamper-proof network.",
+    description:
+      "Sup-Chain is a blockchain-powered supply chain management solution that replaces traditional centralized systems like Oracle with a decentralized, tamper-proof network.",
     tags: ["Solidity", "Ether.js", "Ethereum", "OpenZeppelin", "MetaMask"],
     image: "https://images.unsplash.com/photo-1639322537504-6427a16b0a28?w=800&q=80",
     github: "https://github.com/vauldyyyy",
@@ -27,28 +29,39 @@ const PROJECTS: ProjectDetails[] = [
   },
   {
     title: "Lo-Fi",
-    description: "Lo-Fi is a decentralized finance (DeFi) application that reimagines lending and borrowing. By using blockchain and smart contracts, it removes traditional barriers.",
+    description:
+      "Lo-Fi is a decentralized finance (DeFi) application that reimagines lending and borrowing. By using blockchain and smart contracts, it removes traditional barriers.",
     tags: ["Solidity", "Ether.js", "Ethereum", "OpenZeppelin", "MetaMask"],
     image: "https://images.unsplash.com/photo-1642104704074-907c0698cbd9?w=800&q=80",
   },
   {
     title: "Breast Cancer Diagnosis",
-    description: "Logistic regression proves to be a powerful tool in healthcare analytics, especially for binary classification problems like distinguishing between benign and malignant tumors.",
+    description:
+      "Logistic regression proves to be a powerful tool in healthcare analytics, especially for binary classification problems like distinguishing between benign and malignant tumors.",
     tags: ["Machine Learning", "Python", "AI", "Pandas", "NumPy"],
     image: "https://images.unsplash.com/photo-1576086213369-97a306d36557?w=800&q=80",
   },
   {
-    title: "FraudLens",
-    description: "Real-time UPI fraud detection engine powered by a 5-model stacking ensemble with SHAP explainability and a live React analytics dashboard.",
-    tags: ["Python", "FastAPI", "React", "SHAP", "Vercel"],
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
-    github: "https://github.com/vauldyyyy",
+    title: "UNMUTE",
+    description:
+      "Speech to sign language: YouTube videos, uploads and live meetings become captions and a 3D ASL avatar. Built in a 4-person hackathon team; I led development.",
+    tags: ["Next.js", "TypeScript", "Three.js", "Whisper", "Supabase"],
+    image: "https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?w=800&q=80",
+    demo: "https://unmute-ai.vercel.app",
   },
   {
-    title: "RailGuard AI",
-    description: "End-to-end railway surveillance platform — YOLOv8 object detection, OSNet ReID, ByteTrack tracking, LSTM crowd forecasting & CrewAI multi-agent orchestration.",
-    tags: ["YOLOv8", "ByteTrack", "LSTM", "CrewAI", "FastAPI", "React"],
-    image: "https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=800&q=80",
+    title: "Churn Prediction",
+    description:
+      "Don Bosco Hackathon (Inspirathon 10th Ed.) finalist: 30-day subscriber churn in a 24-hour Kaggle competition, ROC-AUC 0.872 with a LightGBM/CatBoost ensemble.",
+    tags: ["Python", "LightGBM", "CatBoost", "Kaggle"],
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+  },
+  {
+    title: "MedTrack",
+    description:
+      "Cross-platform medicine-expiry tracker with on-device OCR, offline-first sync and layered reminders. Team project.",
+    tags: ["Flutter", "Dart", "Firebase", "ML Kit"],
+    image: "https://images.unsplash.com/photo-1576086213369-97a306d36557?w=800&q=80",
   },
 ];
 
@@ -91,6 +104,17 @@ function Card({ project }: { project: ProjectDetails }) {
               GitHub
             </a>
           )}
+          {project.demo && (
+            <a
+              href={project.demo}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-1.5 font-anton text-[11px] uppercase tracking-wider text-cream/80 hover:text-neon transition-colors"
+            >
+              <ExternalLink size={14} />
+              Live demo
+            </a>
+          )}
           {project.linkedin && (
             <a
               href={project.linkedin}
@@ -116,7 +140,7 @@ export function ProjectCards() {
     <section className="relative w-full py-20 overflow-hidden border-t border-b border-cream/5">
       <div className="absolute top-0 left-0 bottom-0 w-[100px] bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
       <div className="absolute top-0 right-0 bottom-0 w-[100px] bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
-      
+
       <div className="flex gap-6 w-max animate-marquee hover:[animation-play-state:paused] px-6">
         {duplicatedProjects.map((p, i) => (
           <Card key={`${p.title}-${i}`} project={p} />

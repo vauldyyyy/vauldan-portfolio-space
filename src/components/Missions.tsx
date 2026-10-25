@@ -13,37 +13,41 @@ interface Project {
 
 const PROJECTS: Project[] = [
   {
-    video: "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_053923_22c0a6a5-313c-474c-85ff-3b50d25e944a.mp4",
-    score: "9.2/10",
+    video:
+      "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_055427_ac7035b5-9f3b-4289-86fc-941b2432317d.mp4",
+    score: "~7K downloads",
+    title: "Edixa",
+    desc: "Live iOS AI photo editor I co-founded and build. Generative image models for enhancement, background removal, object erasing and AI headshots, with subscriptions, server-enforced usage quotas and a moderated community feed.",
+    tags: ["React Native", "TypeScript", "Node.js", "PostgreSQL", "fal.ai", "RevenueCat"],
+    link: "https://apps.apple.com/app/id6774585556",
+  },
+  {
+    video:
+      "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_053923_22c0a6a5-313c-474c-85ff-3b50d25e944a.mp4",
+    score: "p95 3.3 ms",
     title: "FraudLens",
-    desc: "Real-time UPI fraud detection engine powered by a 5-model stacking ensemble with SHAP explainability and a live React analytics dashboard.",
-    tags: ["Python", "FastAPI", "React", "SHAP", "Vercel", "ML Ensemble"],
-    link: "https://github.com/vauldyyyy",
+    desc: "Fraud detection built like production: one point-in-time feature store for training and serving, time-ordered evaluation, and a FastAPI scoring service with SHAP explanations. Validated on 284,807 real card transactions (ROC-AUC 0.988).",
+    tags: ["Python", "XGBoost", "FastAPI", "SHAP", "Docker", "CI"],
+    link: "https://github.com/vauldyyyy/FraudDetector",
   },
   {
-    video: "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_054411_511c1b7a-fb2f-42ef-bf6c-32c0b1a06e79.mp4",
-    score: "9.5/10",
+    video:
+      "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_054411_511c1b7a-fb2f-42ef-bf6c-32c0b1a06e79.mp4",
+    score: "74.4% mAP50",
     title: "RailGuard AI",
-    desc: "End-to-end railway surveillance platform — YOLOv8 object detection, OSNet ReID, ByteTrack tracking, LSTM crowd forecasting & CrewAI multi-agent orchestration. Built at Cyber Dome 2026.",
-    tags: ["YOLOv8", "ByteTrack", "LSTM", "CrewAI", "FastAPI", "React"],
-    link: "https://github.com/vauldyyyy",
+    desc: "Real-time railway surveillance: a custom YOLOv8 detector for 5 threat classes, cross-camera re-identification with GPU/CPU failover, and a live operations dashboard. Presented at the AI Systems & Software Hackathon (BITS Pilani x IIT Madras).",
+    tags: ["YOLOv8", "PyTorch", "OpenCV", "FastAPI", "React", "WebSockets"],
+    link: "https://github.com/vauldyyyy/Railway-Survillace",
   },
   {
-    video: "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_055427_ac7035b5-9f3b-4289-86fc-941b2432317d.mp4",
-    score: "8.7/10",
-    title: "MedTrack",
-    desc: "Smart medicine management app with AI-powered prescription scanning via Gemini, dose reminders, expiry tracking, and cross-device sync via Supabase.",
-    tags: ["Flutter", "Supabase", "Gemini API", "Dart", "Push Notifications"],
-    link: "https://github.com/vauldyyyy",
-  },
-  {
-    video: "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_053923_22c0a6a5-313c-474c-85ff-3b50d25e944a.mp4",
-    score: "8.9/10",
+    video:
+      "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_053923_22c0a6a5-313c-474c-85ff-3b50d25e944a.mp4",
+    score: "5 experiments",
     title: "When Retrieval Fails",
-    desc: "Research study probing failure modes of Retrieval-Augmented Generation across Gemini API, chunking strategies, query corruption, and context window overflow.",
-    tags: ["RAG", "Gemini API", "LangChain", "Python", "Research Paper"],
+    desc: "Research on when RAG hallucinates: retrieval noise, conflicting evidence, context size, passage position and abstention prompting, on 450 SQuAD v2 questions with bootstrap significance tests. Preprint in progress.",
+    tags: ["RAG", "Gemini API", "FAISS", "Statistics", "Python", "Research"],
     wide: true,
-    link: "https://github.com/vauldyyyy",
+    link: "https://github.com/vauldyyyy/rag-failure-study",
   },
 ];
 
@@ -56,11 +60,16 @@ function Card({ p }: { p: Project }) {
         p.wide ? "md:col-span-2" : ""
       }`}
     >
-      <div className={`relative overflow-hidden rounded-[22px] ${p.wide ? "aspect-[2.4/1]" : "aspect-[4/3]"}`}>
+      <div
+        className={`relative overflow-hidden rounded-[22px] ${p.wide ? "aspect-[2.4/1]" : "aspect-[4/3]"}`}
+      >
         <video
           className="absolute inset-0 w-full h-full object-cover"
           src={p.video}
-          autoPlay loop muted playsInline
+          autoPlay
+          loop
+          muted
+          playsInline
           style={p.wide ? { filter: "brightness(0.55)" } : undefined}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
@@ -84,7 +93,7 @@ function Card({ p }: { p: Project }) {
       <div className="liquid-glass rounded-[20px] px-5 py-4 mt-5 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-cream/70">
-            Impact:
+            Proof:
           </span>
           <span className="font-anton text-[16px] text-neon">{p.score}</span>
         </div>
@@ -117,9 +126,20 @@ export function Missions() {
           >
             Featured
             <br />
-            <span className="pl-12 inline-block"><span className="font-condiment text-neon" style={{ fontSize: "1.05em" }}>Work</span> & Projects</span>
+            <span className="pl-12 inline-block">
+              <span className="font-condiment text-neon" style={{ fontSize: "1.05em" }}>
+                Work
+              </span>{" "}
+              & Projects
+            </span>
           </h2>
-          <a href="https://github.com/vauldyyyy" target="_blank" rel="noreferrer" className="font-anton text-cream uppercase tracking-[0.15em] relative" style={{ fontSize: "clamp(20px, 2vw, 28px)" }}>
+          <a
+            href="https://github.com/vauldyyyy"
+            target="_blank"
+            rel="noreferrer"
+            className="font-anton text-cream uppercase tracking-[0.15em] relative"
+            style={{ fontSize: "clamp(20px, 2vw, 28px)" }}
+          >
             All Projects
             <span className="absolute left-0 -bottom-1 h-[3px] w-full bg-neon" />
           </a>

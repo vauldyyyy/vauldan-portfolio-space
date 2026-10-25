@@ -1,22 +1,59 @@
 import { useFadeUp } from "@/hooks/use-fade-up";
 
 const STATS = [
-  { num: "6+", label: "Projects Shipped" },
-  { num: "3+", label: "Hackathons Won" },
-  { num: "2nd", label: "Year, B.E. Comp Eng" },
-  { num: "10+", label: "Tech Stack" },
+  { num: "~7K", label: "App Downloads" },
+  { num: "3", label: "Hackathon Finals" },
+  { num: "8.7", label: "CGPA, B.E. Comp Eng" },
+  { num: "12x", label: "Goa State Powerlifting Champ" },
 ];
 
-const ROW1 = ["Python", "Machine Learning", "React", "FastAPI", "TypeScript", "YOLOv8", "TensorFlow", "LLMs & RAG"];
-const ROW2 = ["Docker", "Firebase", "Supabase", "CrewAI", "n8n", "Gemini API", "Vercel", "Next.js"];
+const ROW1 = [
+  "Python",
+  "Machine Learning",
+  "React",
+  "FastAPI",
+  "TypeScript",
+  "YOLOv8",
+  "PyTorch",
+  "LLMs & RAG",
+];
+const ROW2 = [
+  "Docker",
+  "Firebase",
+  "Supabase",
+  "XGBoost",
+  "n8n",
+  "Gemini API",
+  "Vercel",
+  "Next.js",
+];
+
+function StatCard({ num, label }: { num: string; label: string }) {
+  const ref = useFadeUp<HTMLDivElement>();
+  return (
+    <div ref={ref} className="fade-up liquid-glass rounded-[16px] p-6">
+      <div className="font-anton text-neon" style={{ fontSize: "clamp(28px, 3vw, 42px)" }}>
+        {num}
+      </div>
+      <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-cream/60 mt-1">
+        {label}
+      </div>
+    </div>
+  );
+}
 
 function Ticker({ items, reverse }: { items: string[]; reverse?: boolean }) {
   const dup = [...items, ...items, ...items];
   return (
     <div className="overflow-hidden py-2">
-      <div className={`flex gap-8 whitespace-nowrap ${reverse ? "animate-marquee-rev" : "animate-marquee"}`}>
+      <div
+        className={`flex gap-8 whitespace-nowrap ${reverse ? "animate-marquee-rev" : "animate-marquee"}`}
+      >
         {dup.map((t, i) => (
-          <span key={i} className="font-anton text-[14px] uppercase tracking-[0.15em] text-cream/80">
+          <span
+            key={i}
+            className="font-anton text-[14px] uppercase tracking-[0.15em] text-cream/80"
+          >
             {t} <span className="text-neon">•</span>
           </span>
         ))}
@@ -31,9 +68,15 @@ export function About() {
       <video
         className="absolute inset-0 w-full h-full object-cover"
         src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_151551_992053d1-3d3e-4b8c-abac-45f22158f411.mp4"
-        autoPlay loop muted playsInline
+        autoPlay
+        loop
+        muted
+        playsInline
       />
-      <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(1,8,40,0.82), rgba(1,8,40,0.5))" }} />
+      <div
+        className="absolute inset-0"
+        style={{ background: "linear-gradient(135deg, rgba(1,8,40,0.82), rgba(1,8,40,0.5))" }}
+      />
       <div className="relative z-10 mx-auto max-w-[1400px] px-6 md:px-12 py-24 lg:py-32 grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
         <div>
           <div className="relative inline-block">
@@ -58,22 +101,9 @@ export function About() {
             </span>
           </div>
           <div className="grid grid-cols-2 gap-4 mt-12 max-w-[460px]">
-            {STATS.map((s) => {
-              const ref = useFadeUp<HTMLDivElement>();
-              return (
-                <div key={s.label} ref={ref} className="fade-up liquid-glass rounded-[16px] p-6">
-                  <div
-                    className="font-anton text-neon"
-                    style={{ fontSize: "clamp(28px, 3vw, 42px)" }}
-                  >
-                    {s.num}
-                  </div>
-                  <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-cream/60 mt-1">
-                    {s.label}
-                  </div>
-                </div>
-              );
-            })}
+            {STATS.map((s) => (
+              <StatCard key={s.label} num={s.num} label={s.label} />
+            ))}
           </div>
         </div>
         <div>
@@ -81,11 +111,17 @@ export function About() {
             className="font-mono text-[14px] uppercase tracking-[0.12em] text-cream/75 max-w-[420px]"
             style={{ lineHeight: 2 }}
           >
-            I'm Vauldan D'Souza — a Computer Engineering undergraduate at Goa College of Engineering with a passion for building AI-powered solutions that tackle real-world challenges.
-            <br /><br />
-            My work spans full-stack ML systems — from real-time UPI fraud detection and railway surveillance with multi-agent orchestration, to research on RAG robustness and automated content pipelines.
-            <br /><br />
-            I believe in shipping fast, learning constantly, and pushing boundaries with every project I take on.
+            I'm Vauldan D'Souza — a Computer Engineering undergraduate at Goa College of Engineering
+            with a passion for building AI-powered solutions that tackle real-world challenges.
+            <br />
+            <br />
+            I co-founded Edixa, a live iOS AI photo editor with ~7,000 downloads. My ML work runs
+            end to end: leak-free feature pipelines and honest evaluation for fraud detection,
+            real-time computer vision for railway safety, and research on when RAG systems
+            hallucinate.
+            <br />
+            <br />I ship fast, but I measure what I ship: every project here links to its code, its
+            tests or its numbers.
           </p>
           <div className="mt-12 space-y-2">
             <Ticker items={ROW1} />
